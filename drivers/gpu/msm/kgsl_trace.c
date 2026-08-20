@@ -12,6 +12,7 @@
  */
 
 #include <linux/module.h>
+#include <linux/tracepoint.h>
 
 #include "kgsl.h"
 #include "kgsl_device.h"
