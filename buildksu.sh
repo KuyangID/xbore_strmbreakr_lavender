@@ -23,21 +23,12 @@ CUSTOM_LOCALVERSION="-Dracin"
 VERSION_TAG="LV1.0"
 ROOT_METHOD="ksu"
 
-# Output Format: "zip" (default) or "img"
-OUTPUT_FORMAT="${1:-zip}"
-
 # Handle special arguments
 CLEAN_BUILD=false
 for arg in "$@"; do
     case "$arg" in
         clean|--clean)
             CLEAN_BUILD=true
-            ;;
-        zip)
-            OUTPUT_FORMAT="zip"
-            ;;
-        img|image)
-            OUTPUT_FORMAT="img"
             ;;
     esac
 done
@@ -91,7 +82,6 @@ echo -e "${PURPLE}=================================================${NC}"
 echo -e "${BLUE}📌 Source Architecture : QTI - EAS               ${NC}"
 echo -e "${BLUE}📌 Target Defconfig    : $DEFCONFIG${NC}"
 echo -e "${BLUE}📌 Variant             : KernelSU${NC}"
-echo -e "${BLUE}📌 Output Format       : $OUTPUT_FORMAT${NC}"
 echo -e "${BLUE}📌 Compiler            : $CLGV${NC}"
 echo -e "${PURPLE}=================================================${NC}"
 
@@ -141,24 +131,15 @@ mkdir -p "$OUTPUT_DIR"
 mkdir -p "$WINDOWS_DEST"
 
 BASE_NAME="Dracin-${VERSION_TAG}-EAS-QTI-${ROOT_METHOD}"
+OUTPUT_FILE="$OUTPUT_DIR/${BASE_NAME}.zip"
 
-if [ "$OUTPUT_FORMAT" = "img" ]; then
-    OUTPUT_FILE="$OUTPUT_DIR/${BASE_NAME}-boot.img"
-    cp "$KERNEL_IMG" "$OUTPUT_FILE"
-    cp "$OUTPUT_FILE" "$WINDOWS_DEST/"
-    echo -e "${GREEN}📦 Output Image: $OUTPUT_FILE${NC}"
-else
-    OUTPUT_FILE="$OUTPUT_DIR/${BASE_NAME}.zip"
-    echo -e "${BLUE}📦 Packaging AnyKernel3 flashable ZIP: $(basename "$OUTPUT_FILE")...${NC}"
-    
-    cd "$ANYKERNEL_DIR"
-    cp "$KERNEL_IMG" .
-    zip -r9 "$OUTPUT_FILE" * -x .git README.md *placeholder
-    cd "$KERNEL_DIR"
-    
-    cp "$OUTPUT_FILE" "$WINDOWS_DEST/"
-    echo -e "${GREEN}📦 Output ZIP: $OUTPUT_FILE${NC}"
-fi
+echo -e "${BLUE}📦 Packaging AnyKernel3 flashable ZIP: $(basename "$OUTPUT_FILE")...${NC}"
+cd "$ANYKERNEL_DIR"
+cp "$KERNEL_IMG" .
+zip -r9 "$OUTPUT_FILE" * -x .git README.md *placeholder
+cd "$KERNEL_DIR"
+
+cp "$OUTPUT_FILE" "$WINDOWS_DEST/"
 
 echo -e "${PURPLE}=================================================${NC}"
 echo -e "${GREEN}🎉 Build Completed in ${MINUTES}m ${SECONDS}s!${NC}"
