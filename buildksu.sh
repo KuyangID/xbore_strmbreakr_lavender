@@ -46,7 +46,7 @@ done
 KB_ROOT="$(cd "$KERNEL_DIR/../.." && pwd)"
 
 # Directories
-OUTPUT_DIR="$KB_ROOT/ScriptBuild/output"
+OUTPUT_DIR="$KB_ROOT/output"
 ANYKERNEL_DIR="$KB_ROOT/ak3/Lavender"
 WINDOWS_DEST="/mnt/c/Users/KUYANG/Documents/KernelZip"
 
