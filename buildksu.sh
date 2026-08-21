@@ -42,15 +42,18 @@ for arg in "$@"; do
     esac
 done
 
+# Base KernelBuild Root Directory
+KB_ROOT="$(cd "$KERNEL_DIR/../.." && pwd)"
+
 # Directories
-OUTPUT_DIR="$KERNEL_DIR/../ScriptBuild/output"
-ANYKERNEL_DIR="$KERNEL_DIR/../AnyKernel3-Stormbreaker"
+OUTPUT_DIR="$KB_ROOT/ScriptBuild/output"
+ANYKERNEL_DIR="$KB_ROOT/ak3/Lavender"
 WINDOWS_DEST="/mnt/c/Users/KUYANG/Documents/KernelZip"
 
 # Compiler: Proton Clang 11 (Default)
-CLANG_DIR="$KERNEL_DIR/../proton-clang-11"
+CLANG_DIR="$KB_ROOT/compiler/proton-clang-11"
 if [ ! -d "$CLANG_DIR" ]; then
-    CLANG_DIR="$KERNEL_DIR/../RepingerClang"
+    CLANG_DIR="$KB_ROOT/compiler/RepingerClang"
 fi
 
 export PATH="$CLANG_DIR/bin:$PATH"
