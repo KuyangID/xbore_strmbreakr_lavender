@@ -50,12 +50,8 @@ OUTPUT_DIR="$KB_ROOT/ScriptBuild/output"
 ANYKERNEL_DIR="$KB_ROOT/ak3/Lavender"
 WINDOWS_DEST="/mnt/c/Users/KUYANG/Documents/KernelZip"
 
-# Compiler: Proton Clang 11 (Default)
+# Compiler: Proton Clang 11
 CLANG_DIR="$KB_ROOT/compiler/proton-clang-11"
-if [ ! -d "$CLANG_DIR" ]; then
-    CLANG_DIR="$KB_ROOT/compiler/RepingerClang"
-fi
-
 export PATH="$CLANG_DIR/bin:$PATH"
 
 # Build Metadata
