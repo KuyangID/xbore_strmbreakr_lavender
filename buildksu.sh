@@ -1,6 +1,7 @@
 #!/bin/bash
 # ==============================================================================
 # Dracin Kernel Build Script - KernelSU Variant (QTI EAS)
+# Target Device: Redmi Note 7 (lavender)
 # Source: xbore_strmbreakr_lavender
 # ==============================================================================
 
@@ -15,7 +16,8 @@ PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 
-# --- Configuration & Variables ---
+# --- Device & Kernel Configuration ---
+DEVICE_NAME="lavender"
 KERNEL_DIR="$(pwd)"
 OUT_DIR="$KERNEL_DIR/out"
 DEFCONFIG="lavender-perf_defconfig"
@@ -33,13 +35,13 @@ for arg in "$@"; do
     esac
 done
 
-# Base KernelBuild Root Directory
-KB_ROOT="$(cd "$KERNEL_DIR/../.." && pwd)"
+# Base KernelBuild Root Directory (3 levels up: sources/<device>/<repo>)
+KB_ROOT="$(cd "$KERNEL_DIR/../../.." && pwd)"
 
 # Directories
-OUTPUT_DIR="$KB_ROOT/output"
-ANYKERNEL_DIR="$KB_ROOT/ak3/Lavender"
-WINDOWS_DEST="/mnt/c/Users/KUYANG/Documents/KernelZip"
+OUTPUT_DIR="$KB_ROOT/output/$DEVICE_NAME"
+ANYKERNEL_DIR="$KB_ROOT/ak3/$DEVICE_NAME"
+WINDOWS_DEST="/mnt/c/Users/KUYANG/Documents/KernelZip/$DEVICE_NAME"
 
 # Compiler: Proton Clang 11
 CLANG_DIR="$KB_ROOT/compiler/proton-clang-11"
@@ -79,6 +81,7 @@ MAKE_ARGS=(
 echo -e "${PURPLE}=================================================${NC}"
 echo -e "${CYAN}   Dracin Kernel Compiler (KernelSU Variant)     ${NC}"
 echo -e "${PURPLE}=================================================${NC}"
+echo -e "${BLUE}📱 Target Device       : $DEVICE_NAME${NC}"
 echo -e "${BLUE}📌 Source Architecture : QTI - EAS               ${NC}"
 echo -e "${BLUE}📌 Target Defconfig    : $DEFCONFIG${NC}"
 echo -e "${BLUE}📌 Variant             : KernelSU${NC}"
